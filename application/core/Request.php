@@ -59,5 +59,25 @@ class Request{
 
     }
 
+    public function getBaseUrl(){
+
+        $script_name = $_SERVER['SCRIPT_NAME'];
+        $request_uri = $this->getRequestUri();
+        // getRequestUriでリクエストURIを取得。
+
+        if(0 === strpos($request_uri, $script_name)){
+        // strposで、$request_uriの文字列で、$script_nameが出てくるのが何番目かをreturn
+            return $script_name;
+
+        }else if(0 === strpos($request_uri, dirname($script_name))){
+        // rtrimで後ろの空白削除
+            return rtrim(dirname($script_name), '/');
+
+        }
+
+        return '';
+
+    }
+
 
 }

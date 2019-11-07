@@ -2,6 +2,7 @@
 
 class ClassLoader{
 
+
   protected $dirs;
 
   public function register(){
@@ -31,6 +32,7 @@ class ClassLoader{
     }
 
   }
+
 
 }
 
