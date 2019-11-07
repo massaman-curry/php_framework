@@ -79,5 +79,22 @@ class Request{
 
     }
 
+    public function getPathInfo(){
+
+        $base_url = $this->getBaseUrl();
+        $request_uri = $this->getRequestUri();
+        // おそらくGETリクエストの?以降を抽出
+        if(false !== ($pos = strpos($request_uri, '?'))){
+            // どこかしらに、GETリクエストの?以降のぶんがある場合
+            $request_uri = substr($request_uri, 0, $pos);
+            // $request_uriの0番目からGETリクエストの?の前までを取得
+        }
+        // $request_uriを$base_urlから後ろを取得
+        $path_info = (string)substr($request_uri, strlen($base_url));
+
+        return $path_info;
+
+    }
+
 
 }
