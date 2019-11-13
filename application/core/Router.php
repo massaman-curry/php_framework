@@ -2,7 +2,6 @@
 
 class Router{
 
-
     protected $routes;
 
     public function __construct($definitions){
@@ -58,7 +57,7 @@ class Router{
         }
 
         return false;
-        
+
     }
 
 
