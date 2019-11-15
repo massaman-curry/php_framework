@@ -42,7 +42,19 @@ class Session{
     public function clear(){
 
         $_SESSION = array();
-        
+
+    }
+
+    public function regenerate($destroy = true){
+
+        if(!self::$sessionIdRegenerated){
+            // 標準のsession関数、session_idを置き換える
+            session_regenerate_id($destroy);
+
+            self::$sessionIdRegenerated = true;
+
+        }
+
     }
 
 
