@@ -2,7 +2,6 @@
 
 class ClassLoader{
 
-
   protected $dirs;
 
   public function register(){
@@ -11,7 +10,7 @@ class ClassLoader{
 
   }
 
-  public function registerDir(){
+  public function registerDir($dir){
 
     $this->dirs[] = $dir;
 
@@ -24,9 +23,11 @@ class ClassLoader{
       $file = $dir . '/' .$class . '/php';
 
       if (is_readable($file)){
+
         require $file;
         
         return;
+
       }
 
     }
