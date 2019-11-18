@@ -43,4 +43,42 @@ abstract class Application{
 
     }
 
+    protected function configure(){
+
+    }
+
+    abstract public function getRootDir();
+
+    abstract protected function registerRoutes();
+
+    public function isDebugMode(){
+
+        return $this->debug;
+
+    }
+
+    public function getRequest(){
+
+        return $this->request;
+
+    }
+
+    public function getResponse(){
+
+        return $this->response;
+
+    }
+
+    public function getSession(){
+
+        return $this->session;
+
+    }
+
+    public function getDbManager(){
+
+        return $this->db_manager;
+
+    }
+
 }
