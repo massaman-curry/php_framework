@@ -46,7 +46,8 @@ abstract class Application{
     protected function configure(){
 
     }
-
+    // 以下はabstractメソッドなので、getRootDir, registerRoutesメソッドはこのクラスを継承した、子クラスで実装される。
+    // これは、アプリケーションごとに設定することが目的であるため
     abstract public function getRootDir();
 
     abstract protected function registerRoutes();
@@ -80,5 +81,24 @@ abstract class Application{
         return $this->db_manager;
 
     }
+
+    public function getControllerDir(){
+
+        return $this->getRootDir() . '/controllers';
+
+    }
+
+    public function getViewDir(){
+
+        return $this->getRootDir() . '/views';
+
+    }
+
+    public function getModelDir(){
+
+        return $this->getRootDir() . '/models';
+
+    }
+
 
 }
