@@ -85,6 +85,7 @@ abstract class Application{
     public function getControllerDir(){
 
         return $this->getRootDir() . '/controllers';
+        // controller directoryのなかに、controllerファイルが入っている。それを利用した形。
 
     }
 
@@ -99,6 +100,42 @@ abstract class Application{
         return $this->getRootDir() . '/models';
 
     }
+
+    public function run(){
+
+        $params = $this->router->resolve($this->request->getPathInfo());
+        // $this->routerで、initialize methodで作った、RouterClassを呼び出し。
+        // そして、そのRouterClassのresolve methodを実行。resolveの引数として、
+        // このファイルの変数$requestのgetPathInfo methodを実行。なお、$requestは
+        // $router同様、initialize methodでRequestのインスタンスとして作成している。
+
+        if ($params === false){
+        }
+
+        $controller = $params['controller'];
+        $action = $params['action'];
+
+        $this->runAction($controller, $action, $params);
+
+        $this->response->send();
+
+    }
+
+    public function runAction($controller_name, $action, $params = array()){
+
+        $controller_class = ucfirst($controller_name) . 'Controller';
+        // ucfirstで先頭大文字。これによって、◯◯Controllerという文字列が作られる。
+        $controller = $this->findController($controller_class);
+
+        if($controller === false){
+        }
+
+        $content = $controller->run($action, $params);
+
+        $this->response->setContent($content);
+
+    }
+
 
 
 }
