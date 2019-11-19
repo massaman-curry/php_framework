@@ -103,19 +103,29 @@ abstract class Application{
 
     public function run(){
 
-        $params = $this->router->resolve($this->request->getPathInfo());
-        // $this->routerで、initialize methodで作った、RouterClassを呼び出し。
-        // そして、そのRouterClassのresolve methodを実行。resolveの引数として、
-        // このファイルの変数$requestのgetPathInfo methodを実行。なお、$requestは
-        // $router同様、initialize methodでRequestのインスタンスとして作成している。
+        try{
 
-        if ($params === false){
+            $params = $this->router->resolve($this->request->getPathInfo());
+            // $this->routerで、initialize methodで作った、RouterClassを呼び出し。
+            // そして、そのRouterClassのresolve methodを実行。resolveの引数として、
+            // このファイルの変数$requestのgetPathInfo methodを実行。なお、$requestは
+            // $router同様、initialize methodでRequestのインスタンスとして作成している。
+            if ($params === false){
+
+                throw new HttpNotFoundException('No route found for' . $this->request->getPathInfo());
+
+            }
+
+            $controller = $params['controller'];
+            $action = $params['action'];
+
+            $this->runAction($controller, $action, $params);
+
+        } catch (HttpNotFoundException $e){
+
+            $this->render404Page($e);
+
         }
-
-        $controller = $params['controller'];
-        $action = $params['action'];
-
-        $this->runAction($controller, $action, $params);
 
         $this->response->send();
 
@@ -128,6 +138,9 @@ abstract class Application{
         $controller = $this->findController($controller_class);
 
         if($controller === false){
+
+            throw new HttpNotFoundException($controller_class . 'controller is not found.');
+
         }
 
         $content = $controller->run($action, $params);
