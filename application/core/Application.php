@@ -196,8 +196,9 @@ abstract class Application{
         {$message}
     </body>
     </html>
+EOF
 
-    EOF
+// 終端記号(EOF)の前にインデントが入ってしまっていたため、エラーが出てしまっていた。git diffでチェック。
         );
 
     }
