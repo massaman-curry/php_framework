@@ -89,6 +89,26 @@ abstract class Controller{
 
     }
 
+    protected function generateCsrfToken($form_name){
+
+        $key = 'csrf_tokens/' . $form_name;
+        $tokens = $this->session->get($key, array());
+        // in one session, 10 tokens can be stocked.
+        // it reaches 10, oldest token will be released from the queue.
+        
+        if(count($tokens) >= 10){
+            array_shift($tokens);
+        }
+
+        $token = sha1($form_name . session_id() . microtime());
+        $tokens[] = $token;
+
+        $this->session->set($key, $tokens);
+
+        return $token;
+
+    }
+
 
 
 }
