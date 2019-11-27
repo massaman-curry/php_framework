@@ -22,6 +22,7 @@ class View{
     public function render($_path, $_variables = array(), $_layout = false){
 
         $_file = $this->base_dir . '/' . $_path . '.php';
+        // base_dir/path.php というアドレスのファイルを（後で）requireする。それを$contentに格納。
 
         extract(array_merge($this->defaults, $_variables));
 
