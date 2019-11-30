@@ -104,6 +104,8 @@ abstract class Controller{
         $tokens[] = $token;
 
         $this->session->set($key, $tokens);
+        // registrate $tokens array as $key name. this means,
+        // each foam has got tokens as array
 
         return $token;
 
