@@ -4,6 +4,8 @@ abstract class Controller{
 
     protected $controller_name;
     protected $action_name;
+    protected $auth_actions = array();
+
     protected $application;
     protected $request;
     protected $response;
@@ -28,15 +30,33 @@ abstract class Controller{
     public function run($action, $params = array()){
 
         $this->action_name = $action;
+
         $action_method = $action . 'Action';
 
         if (!method_exists($this, $action_method)){
             $this->forward404();
         }
 
+        if ($this->needsAuthentication($action) && !$this->session->isAuthenticated()){
+            throw new UnauthorizedActionException();
+        }
+
         $content = $this->$action_method($params);
 
         return $content;
+
+    }
+
+    protected function needsAuthentication($action){
+
+        if ($this->auth_actions === true || 
+            (is_array($this->auth_action) && in_array($action, $this->auth_action))){
+
+                return true;
+
+            }
+        
+        return false;
 
     }
 
