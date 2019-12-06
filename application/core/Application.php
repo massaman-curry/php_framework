@@ -140,6 +140,8 @@ abstract class Application{
 
         $controller_class = ucfirst($controller_name) . 'Controller';
         // ucfirstで先頭大文字。これによって、◯◯Controllerという文字列が作られる。
+        // controllerは複数ある。会員登録用コントローラー、ポスト用コントローラーなど。
+        // それらを束ねているのが、Application.php
         $controller = $this->findController($controller_class);
 
         if($controller === false){
@@ -149,6 +151,7 @@ abstract class Application{
         }
 
         $content = $controller->run($action, $params);
+        // controller classのrunメソッドを実行している
 
         $this->response->setContent($content);
 
